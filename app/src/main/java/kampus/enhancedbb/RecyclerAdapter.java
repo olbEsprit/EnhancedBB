@@ -9,57 +9,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Павел on 13.12.2015.
-
-
-
-
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BBViewHolder> {
-
-    private List<IdleBB> contactList;
-
-    public RecyclerAdapter(List<IdleBB> contactList) {
-        this.contactList = contactList;
-    }
-
-    @Override
-    public int getItemCount() {
-        return contactList.size();
-    }
-
-    @Override
-    public void onBindViewHolder(BBViewHolder contactViewHolder, int i) {
-        IdleBB ci = contactList.get(i);
-        contactViewHolder.b_title.setText(ci.title);
-        contactViewHolder.b_body.setText(ci.body);
-
-    }
-
-    @Override
-    public BBViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.
-                from(viewGroup.getContext()).
-                inflate(R.layout.recycler_item, viewGroup, false);
-
-        return new BBViewHolder(itemView);
-    }
-
-    public static class BBViewHolder extends RecyclerView.ViewHolder {
-        protected TextView b_title;
-        protected TextView b_body;
-
-        public  BBViewHolder(View v)
-        {
-            super(v);
-            b_title = (TextView) v.findViewById(R.id.b_title);
-            b_body = (TextView) v.findViewById(R.id.b_body);
-        }
-    }
-
-}
- */
-
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private ArrayList<String> b_titleList;
@@ -103,10 +52,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public int getItemCount() {
         return b_titleList.size();
+    }
 
-
-
-
+    public void swap(ArrayList<String> titleList, ArrayList<String> bodyList){
+        titleList.clear();
+        bodyList.clear();
+        titleList.addAll(b_titleList);
+        bodyList.addAll(b_bodyList);
+        notifyDataSetChanged();
     }
 
 }

@@ -20,7 +20,7 @@ public interface BBService {
     //So these are the list available in our WEB API and the methods look straight forward
 
     //i.e. http://localhost/api/institute/Students
-    @GET("/albums")
+    @GET("/posts/")
     public void getBB(Callback<List<IdleBB>> callback);
 
     //i.e. http://localhost/api/institute/Students/1

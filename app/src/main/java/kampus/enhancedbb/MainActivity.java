@@ -37,13 +37,15 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerAdapter mAdapter;
 
+    final ArrayList<String> TitleList = new ArrayList<>();
+    final ArrayList<String> BodyList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ArrayList<String> TitleList = new ArrayList<>();
-        final ArrayList<String> BodyList = new ArrayList<>();
+        getAllBulletins();
 
 
 
@@ -56,31 +58,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        restService = new RestService();
-        restService.getService().getBB(new Callback<List<IdleBB>>() {
-            @Override
-            public void success(List<IdleBB> bbs, Response response) {
 
-                ArrayList<HashMap<String, String>> studentList = new ArrayList<HashMap<String, String>>();
-
-                for (int i = 0; i < bbs.size(); i++) {
-                    HashMap<String, String> bb = new HashMap<String, String>();
-                    bb.put("id", String.valueOf(bbs.get(i).id));
-                    bb.put("title", String.valueOf(bbs.get(i).title));
-                    bb.put("body", String.valueOf(bbs.get(i).body));
-
-                    TitleList.add(bbs.get(i).title);
-                    BodyList.add(bbs.get(i).body);
-                    studentList.add(bb);
-              }
-
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
-            }
-        }
-        );
 
                     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -92,9 +70,9 @@ public class MainActivity extends AppCompatActivity
                     {
                         @Override
                         public void onClick (View view){
-                        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
+                            //Тут нужно заново получить объявления
+                            getAllBulletins();
+                        }
                     }
 
                     );
@@ -109,6 +87,34 @@ public class MainActivity extends AppCompatActivity
                     navigationView.setNavigationItemSelectedListener(this);
                 }
 
+
+                public void getAllBulletins(){
+
+                    restService = new RestService();
+                    restService.getService().getBB(new Callback<List<IdleBB>>() {
+                         @Override
+                                                       public void success(List<IdleBB> bbs, Response response) {
+                                                           ArrayList<HashMap<String, String>> studentList = new ArrayList<HashMap<String, String>>();
+
+                                                           for (int i = 0; i < bbs.size(); i++) {
+                                                               HashMap<String, String> bb = new HashMap<String, String>();
+                                                               bb.put("id", String.valueOf(bbs.get(i).id));
+                                                               bb.put("title", String.valueOf(bbs.get(i).title));
+                                                               bb.put("body", String.valueOf(bbs.get(i).body));
+
+                                                               TitleList.add(bbs.get(i).title);
+                                                               BodyList.add(bbs.get(i).body);
+                                                               studentList.add(bb);
+                                                           }
+                                                           mAdapter.notifyDataSetChanged();
+                                                       }
+                                                       @Override
+                                                       public void failure(RetrofitError error) {
+                                                           Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                                       }
+                                                   }
+                    );
+                }
 
                 @Override
                 public void onBackPressed () {
