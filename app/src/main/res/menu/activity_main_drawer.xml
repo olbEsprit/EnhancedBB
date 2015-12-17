@@ -2,23 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_camara" android:icon="@android:drawable/ic_menu_camera"
-            android:title="Import" />
-        <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
-            android:title="Tools" />
+        <item android:id="@+id/nav_all" android:icon="@drawable/ic_home_black_24dp"
+            android:title="Все объявления" />
+        <item android:id="@+id/nav_profile" android:icon="@drawable/ic_account_box_black_24dp"
+            android:title="По профилю" />
+        <item android:id="@+id/nav_subdiv" android:icon="@drawable/ic_folder_shared_black_24dp"
+            android:title="По подразделению" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
-                android:title="Share" />
-            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+     <item android:id="@+id/nav_logout" android:icon="@drawable/ic_power_settings_new_black_24dp"
+                android:title="Выход" />
 
 </menu>

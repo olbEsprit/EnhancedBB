@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     RestService restService;
     private RecyclerView mRecyclerView;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerAdapter mAdapter;
 
@@ -55,30 +56,32 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RecyclerAdapter(TitleList, BodyList);
         mRecyclerView.setAdapter(mAdapter);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllBulletins();
+            }
+        });
 
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-                    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-                    setSupportActionBar(toolbar);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //here
+                startActivity(new Intent(v.getContext(), NewBulletinActivity.class));
+            }
+        });
 
-                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                    fab.setOnClickListener(new View.OnClickListener()
-
-                    {
-                        @Override
-                        public void onClick (View view){
-                            //Тут нужно заново получить объявления
-                            getAllBulletins();
-                        }
-                    }
-
-                    );
-
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
                     drawer.setDrawerListener(toggle);
                     toggle.syncState();
@@ -107,10 +110,12 @@ public class MainActivity extends AppCompatActivity
                                                                studentList.add(bb);
                                                            }
                                                            mAdapter.notifyDataSetChanged();
+                                                         onItemsLoadComplete();
                                                        }
                                                        @Override
                                                        public void failure(RetrofitError error) {
                                                            Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                                           onItemsLoadComplete();
                                                        }
                                                    }
                     );
@@ -154,22 +159,41 @@ public class MainActivity extends AppCompatActivity
                     // Handle navigation view item clicks here.
                     int id = item.getItemId();
 
-                    if (id == R.id.nav_camara) {
-                        // Handle the camera action
-                    } else if (id == R.id.nav_gallery) {
+                    if (id == R.id.nav_all) {
 
-                    } else if (id == R.id.nav_slideshow) {
+                    } else if (id == R.id.nav_profile) {
 
-                    } else if (id == R.id.nav_manage) {
+                    } else if (id == R.id.nav_subdiv) {
 
-                    } else if (id == R.id.nav_share) {
+                    } else if (id == R.id.nav_logout) {
 
-                    } else if (id == R.id.nav_send) {
-
+                        Intent intent = new Intent(this, LoginActivity.class);
+                        startActivity(intent);
                     }
-
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                     return true;
                 }
+
+
+
+    void refreshItems() {
+        // Load items
+        // ...
+
+        // Load complete
+        onItemsLoadComplete();
+    }
+
+    void onItemsLoadComplete() {
+        // Update the adapter and notify data set changed
+        // ...
+
+        // Stop refresh animation
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+
             }
+
+
