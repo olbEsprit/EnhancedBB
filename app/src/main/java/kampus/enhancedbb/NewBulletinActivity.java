@@ -47,7 +47,7 @@ public class NewBulletinActivity extends AppCompatActivity {
         IdleBB bb = new IdleBB();
         bb.title = editTitle.getText().toString();
         bb.body = editText.getText().toString();
-        bb.UserId = 10;
+        bb.userId = 10;
         bb.id = _Bulletin_ID;
         if (_Bulletin_ID == 0) {
             restService.getService().addBB(bb, new Callback<IdleBB>(){

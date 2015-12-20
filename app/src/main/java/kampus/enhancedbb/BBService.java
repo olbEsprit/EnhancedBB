@@ -28,6 +28,9 @@ public interface BBService {
     @GET("/posts/{id}")
     public void getBBById(@Path("id") Integer id,Callback<IdleBB> callback);
 
+    @GET("/posts/{UserId}")
+    public void getBBByUID(@Path("UserId") Integer id,Callback<IdleBB> callback);
+
     //i.e. http://localhost/api/institute/Students/1
     //Delete student record base on ID
     @DELETE("/posts/{id}")

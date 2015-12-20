@@ -54,11 +54,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return b_titleList.size();
     }
 
-    public void swap(ArrayList<String> titleList, ArrayList<String> bodyList){
-        titleList.clear();
-        bodyList.clear();
-        titleList.addAll(b_titleList);
-        bodyList.addAll(b_bodyList);
+    public void swap(){
+        b_titleList.clear();
+        b_bodyList.clear();
         notifyDataSetChanged();
     }
 
