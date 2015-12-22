@@ -19,7 +19,7 @@
             android:background="@color/colorPrimary"
             android:foreground="@color/colorAccent"/>
         <Spinner
-            android:id="@+id/static_spinner2"
+            android:id="@+id/dynamic_spinner2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"

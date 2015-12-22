@@ -2,49 +2,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
-
-
-    <item
-        android:title="Профиль 1"
-        android:id="@+id/prof1"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 2"
-        android:id="@+id/prof2"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 3"
-        android:id="@+id/prof3"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 4"
-        android:id="@+id/prof4"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 5"
-        android:id="@+id/prof5"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 6"
-        android:id="@+id/prof6"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 7"
-        android:id="@+id/prof7"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 8"
-        android:id="@+id/prof8"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 9"
-        android:id="@+id/prof9"
-        app:showAsAction="never" />
-    <item
-        android:title="Профиль 10"
-        android:id="@+id/prof10"
-        app:showAsAction="never" />
-
-
-
 </menu>
