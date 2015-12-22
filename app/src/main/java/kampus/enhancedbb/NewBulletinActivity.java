@@ -1,5 +1,6 @@
 package kampus.enhancedbb;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -17,12 +17,25 @@ public class NewBulletinActivity extends AppCompatActivity {
     EditText editTitle;
     private int _Bulletin_ID=0;
     RestService restService;
+    private MultiSelectionSpinner subDivMultiSpinner;
+    private MultiSelectionSpinner profileMultiSpinner;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         restService = new RestService();
         setContentView(R.layout.activity_new_bulletin);
+
+        String[] array = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+        subDivMultiSpinner = (MultiSelectionSpinner) findViewById(R.id.subdivSpinner);
+        subDivMultiSpinner.setItems(array);
+        subDivMultiSpinner.setSelection(new int[]{2, 6});
+        profileMultiSpinner = (MultiSelectionSpinner) findViewById(R.id.profSpinner);
+        profileMultiSpinner.setItems(array);
+        profileMultiSpinner.setSelection(new int[]{2, 6});
 
         final Button exbutton = (Button) findViewById(R.id.ExitButton);
         final Button svbutton = (Button) findViewById(R.id.SaveButton);
