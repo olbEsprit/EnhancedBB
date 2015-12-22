@@ -4,6 +4,8 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_all" android:icon="@drawable/ic_home_black_24dp"
             android:title="Все объявления" />
+        <item android:id="@+id/nav_actual" android:icon="@drawable/ic_stars_black_24dp"
+            android:title="Актуальные объявления" />
         <item android:id="@+id/nav_profile" android:icon="@drawable/ic_account_box_black_24dp"
             android:title="По профилю" />
         <item android:id="@+id/nav_subdiv" android:icon="@drawable/ic_folder_shared_black_24dp"

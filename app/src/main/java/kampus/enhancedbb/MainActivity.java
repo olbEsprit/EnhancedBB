@@ -49,18 +49,15 @@ public class MainActivity extends AppCompatActivity
     int page=1;
     int UID = 1;
 
+    public static Account nowAccount;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        GetUser("mky","mky");
-
         getAllBulletins();
-
-
-
-
         mRecyclerView = (RecyclerView) findViewById(R.id.cardList);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -76,6 +73,8 @@ public class MainActivity extends AppCompatActivity
                 switch (page) {
                     case 1: {
                         getAllBulletins();
+                        Toast.makeText(MainActivity.this, "Здравствуйте, " + nowAccount.profiles.get(0).name, Toast.LENGTH_LONG).show();
+
                         break;
                     }
                     case 2:
@@ -118,38 +117,54 @@ public class MainActivity extends AppCompatActivity
 
 
                 public void getAllBulletins(){
-                    /*TitleList.clear();
+                    TitleList.clear();
                     BodyList.clear();
                     restService = new RestService();
-                    restService.getService().getBB(new Callback<List<IdleBB>>() {
-                         @Override
-                                                       public void success(List<IdleBB> bbs, Response response) {
-                                                           ArrayList<HashMap<String, String>> studentList = new ArrayList<HashMap<String, String>>();
+                    restService.getService().getAllBulletins(nowAccount.id, new Callback<List<Bulletin>>() {
+                        @Override
+                        public void success(List<Bulletin> bulletins, Response response) {
+                            for (int i = 0; i < bulletins.size(); i++) {
+                                TitleList.add(bulletins.get(i).subject);
+                                BodyList.add(bulletins.get(i).text);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                            mAdapter = new RecyclerAdapter(TitleList, BodyList);
+                            mRecyclerView.setAdapter(mAdapter);
+                            onItemsLoadComplete();
+                        }
 
-                                                           for (int i = 0; i < bbs.size(); i++) {
-                                                               HashMap<String, String> bb = new HashMap<String, String>();
-                                                               bb.put("id", String.valueOf(bbs.get(i).id));
-                                                               bb.put("title", String.valueOf(bbs.get(i).title));
-                                                               bb.put("body", String.valueOf(bbs.get(i).body));
-
-                                                               TitleList.add(bbs.get(i).title);
-                                                               BodyList.add(bbs.get(i).body);
-                                                               studentList.add(bb);
-                                                           }
-                             mAdapter.notifyDataSetChanged();
-                             mAdapter = new RecyclerAdapter(TitleList, BodyList);
-                             mRecyclerView.setAdapter(mAdapter);
-                             onItemsLoadComplete();
-
-                                                       }
-                                                       @Override
-                                                       public void failure(RetrofitError error) {
-                                                           Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
-                                                           onItemsLoadComplete();
-                                                       }
-                                                   }
-                    );*/
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                            onItemsLoadComplete();
+                        }
+                    });
                 }
+
+    public void getActualBulletins(){
+        TitleList.clear();
+        BodyList.clear();
+        restService = new RestService();
+        restService.getService().getActualBulletins(nowAccount.id, new Callback<List<Bulletin>>() {
+            @Override
+            public void success(List<Bulletin> bulletins, Response response) {
+                for (int i = 0; i < bulletins.size(); i++) {
+                    TitleList.add(bulletins.get(i).subject);
+                    BodyList.add(bulletins.get(i).text);
+                }
+                mAdapter.notifyDataSetChanged();
+                mAdapter = new RecyclerAdapter(TitleList, BodyList);
+                mRecyclerView.setAdapter(mAdapter);
+                onItemsLoadComplete();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                onItemsLoadComplete();
+            }
+        });
+    }
 
                 public void getBBbyUID(final int UserID)
                 {
@@ -192,13 +207,14 @@ public class MainActivity extends AppCompatActivity
                 public void GetUser(String login, String password)
                 {
                     restService = new RestService();
-                    restService.getService().getUser(login, password, new Callback<Account>(){
+                    restService.getService().getUser(login, password, new Callback<Account>() {
                         @Override
-                        public void success(Account account, Response response){
-                            Toast.makeText(MainActivity.this,account.name.toString(), Toast.LENGTH_LONG).show();
+                        public void success(Account account, Response response) {
+                            Toast.makeText(MainActivity.this, account.name.toString(), Toast.LENGTH_LONG).show();
                         }
+
                         @Override
-                    public void failure(RetrofitError error){
+                        public void failure(RetrofitError error) {
                             Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
                         }
                     });
@@ -290,16 +306,7 @@ public class MainActivity extends AppCompatActivity
                     // Handle navigation view item clicks here.
                     int id = item.getItemId();
 
-                    Spinner staticSpinner = (Spinner) findViewById(R.id.static_spinner);
-                    ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
-                            .createFromResource(this, R.array.spinner_data,
-                                    android.R.layout.simple_spinner_item);
-                    staticAdapter
-                            .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    staticSpinner.setAdapter(staticAdapter);
 
-                    staticSpinner.setEnabled(false);
-                    staticSpinner.setVisibility(View.GONE);
 
 
                     Spinner staticSpinner2 = (Spinner) findViewById(R.id.static_spinner2);
@@ -313,9 +320,29 @@ public class MainActivity extends AppCompatActivity
                     staticSpinner2.setEnabled(false);
                     staticSpinner2.setVisibility(View.GONE);
 
+                    String[] items = new String[] { "Chai Latte", "Green Tea", "Black Tea" };
 
 
-                    staticSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    SpinProfileAdapter adapter = new SpinProfileAdapter(this, android.R.layout.simple_spinner_item, nowAccount.profiles);
+
+                    Spinner dynamicSpinner = (Spinner) findViewById(R.id.dynamic_spinner);
+
+                    dynamicSpinner.setAdapter(adapter);
+
+                    dynamicSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view,
+                                                   int position, long id) {
+                            Log.v("item", (String) parent.getItemAtPosition(position));
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // TODO Auto-generated method stub
+                        }
+                    });
+
+                    dynamicSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             switch (position) {
@@ -465,15 +492,24 @@ public class MainActivity extends AppCompatActivity
 
 
                     if (id == R.id.nav_all) {
-                        staticSpinner.setEnabled(false);
-                        staticSpinner.setVisibility(View.GONE);
+                        dynamicSpinner.setEnabled(false);
+                        dynamicSpinner.setVisibility(View.GONE);
                         staticSpinner2.setEnabled(false);
                         staticSpinner2.setVisibility(View.GONE);
                         getAllBulletins();
                         page = 1;
+
+                    } else if (id == R.id.nav_actual) {
+                        dynamicSpinner.setEnabled(false);
+                        dynamicSpinner.setVisibility(View.GONE);
+                            staticSpinner2.setEnabled(false);
+                            staticSpinner2.setVisibility(View.GONE);
+                            getActualBulletins();
+                            page = 1;
+
                     } else if (id == R.id.nav_profile) {
-                        staticSpinner.setEnabled(true);
-                        staticSpinner.setVisibility(View.VISIBLE);
+                        dynamicSpinner.setEnabled(true);
+                        dynamicSpinner.setVisibility(View.VISIBLE);
                         staticSpinner2.setEnabled(false);
                         staticSpinner2.setVisibility(View.GONE);
                         getBBbyUID(UID);
@@ -481,8 +517,8 @@ public class MainActivity extends AppCompatActivity
 
                     } else if (id == R.id.nav_subdiv) {
                         UID = 10;
-                        staticSpinner.setEnabled(false);
-                        staticSpinner.setVisibility(View.GONE);
+                        dynamicSpinner.setEnabled(false);
+                        dynamicSpinner.setVisibility(View.GONE);
                         staticSpinner2.setEnabled(true);
                         staticSpinner2.setVisibility(View.VISIBLE);
                         getBBbyUID(UID);
@@ -499,19 +535,9 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    void refreshItems() {
-        // Load items
-        // ...
 
-        // Load complete
-        onItemsLoadComplete();
-    }
 
     void onItemsLoadComplete() {
-        // Update the adapter and notify data set changed
-        // ...
-
-        // Stop refresh animation
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

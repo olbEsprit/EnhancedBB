@@ -23,6 +23,26 @@ public interface BBService {
     @POST("/api/Account/")
     //@Headers({"Content-Type: application/json;charset=UTF-8"})
     public void getUser(@Field("login") String login, @Field("password") String password, Callback<Account> callback);
+
+    @FormUrlEncoded
+    @POST("/api/Bulletin/All")
+    public void getAllBulletins(@Field("id") long id, Callback<List<Bulletin>> callback);
+
+    @FormUrlEncoded
+    @POST("/api/Bulletin/Actual")
+    public void getActualBulletins(@Field("id") long id, Callback<List<Bulletin>> callback);
+
+    @FormUrlEncoded
+    @POST("/api/Bulletin/Profile")
+    public void getBulletinsByProfile(@Field("id") long id, Callback<List<Bulletin>> callback);
+
+    @FormUrlEncoded
+    @POST("/api/Bulletin/Subdivision")
+    public void getBulletinsBySubdiv(@Field("id") long id, Callback<List<Bulletin>> callback);
+
+
+
+
 //Retrofit turns our institute WEB API into a Java interface.
     //So these are the list available in our WEB API and the methods look straight forward
     /*

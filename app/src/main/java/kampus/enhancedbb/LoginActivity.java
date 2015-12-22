@@ -45,6 +45,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    public static Account myAccount;
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -94,7 +96,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                GetUser(mEmailView.getText().toString(), mPasswordView.getText().toString());
+                if (LoginSuccess) {
+
+
+                }
+                //attemptLogin();
             }
         });
 
@@ -205,11 +212,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-            //GetUser(mEmailView.toString(), mPasswordView.toString());
+            /*GetUser(mEmailView.toString(), mPasswordView.toString());
             if (GetUser(mEmailView.toString(),mPasswordView.toString())) {
+
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-            }
+            }*/
             //else
               //  Toast.makeText(LoginActivity.this, "error", Toast.LENGTH_LONG).show();
         }
@@ -227,12 +235,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(account != null)
                 {
                     LoginSuccess = true;
+                    Toast.makeText(LoginActivity.this, "Здравствуйте, " + account.name.toString(), Toast.LENGTH_LONG).show();
+
+                    MainActivity.nowAccount = account;
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
-                else LoginSuccess = false;
+                else
+                {
+                    LoginSuccess = false;
+                    Toast.makeText(LoginActivity.this, "Неправильный логин или пароль", Toast.LENGTH_LONG).show();
+                }
+
             }
             @Override
             public void failure(RetrofitError error){
                 LoginSuccess = false;
+                Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
             }
 
         });

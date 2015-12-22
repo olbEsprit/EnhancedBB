@@ -6,7 +6,7 @@ package kampus.enhancedbb;
 public class RestService {
     //You need to change the IP if you testing environment is not local machine
     //or you may have different URL than we have here
-    private static final String URL = "http://192.168.43.167:2698";
+    private static final String URL = "http://campusbbapi.azurewebsites.net/";
     private retrofit.RestAdapter restAdapter;
     private BBService apiService;
 
