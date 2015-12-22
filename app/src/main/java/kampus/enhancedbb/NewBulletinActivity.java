@@ -44,7 +44,7 @@ public class NewBulletinActivity extends AppCompatActivity {
 
     public void AddNewBulletin()
     {
-        IdleBB bb = new IdleBB();
+        /*IdleBB bb = new IdleBB();
         bb.title = editTitle.getText().toString();
         bb.body = editText.getText().toString();
         bb.userId = 10;
@@ -77,6 +77,6 @@ public class NewBulletinActivity extends AppCompatActivity {
                     Toast.makeText(NewBulletinActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             });
-        }
+        }*/
     }
 }

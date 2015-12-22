@@ -29,9 +29,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -44,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+    RestService restService;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -199,10 +205,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            //GetUser(mEmailView.toString(), mPasswordView.toString());
+            if (GetUser(mEmailView.toString(),mPasswordView.toString())) {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+            //else
+              //  Toast.makeText(LoginActivity.this, "error", Toast.LENGTH_LONG).show();
         }
     }
+
+    public  boolean LoginSuccess;
+
+    public boolean GetUser(String login, String password)
+    {
+        restService = new RestService();
+
+        restService.getService().getUser(login, password, new Callback<Account>(){
+            @Override
+            public void success(Account account, Response response){
+                if(account != null)
+                {
+                    LoginSuccess = true;
+                }
+                else LoginSuccess = false;
+            }
+            @Override
+            public void failure(RetrofitError error){
+                LoginSuccess = false;
+            }
+
+        });
+        return LoginSuccess;
+    }
+
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic

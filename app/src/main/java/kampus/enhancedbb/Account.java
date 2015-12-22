@@ -9,6 +9,6 @@ public class Account {
     public long id;
     public String name;
     public List<Profile> Profiles;
-    public List<Subdivision> Subdivs;
-    public boolean isModerator;
+    public List<Subdivision> Subdivisions;
+    //public boolean isModerator;
 }

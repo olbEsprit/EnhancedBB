@@ -7,9 +7,24 @@ import android.app.Application;
  */
 public class Auth extends Application{
     public String login;
+    public String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Auth(String password, String login) {
+        this.password = password;
+        this.login = login;
+    }
 
     public String getLogin() {
         return login;
+
     }
 
     public void setLogin(String login) {
@@ -21,3 +36,4 @@ public class Auth extends Application{
         this.login = login;
     }
 }
+

@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        GetUser("mky","mky");
 
         getAllBulletins();
 
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity
 
 
                 public void getAllBulletins(){
-                    TitleList.clear();
+                    /*TitleList.clear();
                     BodyList.clear();
                     restService = new RestService();
                     restService.getService().getBB(new Callback<List<IdleBB>>() {
@@ -146,12 +148,12 @@ public class MainActivity extends AppCompatActivity
                                                            onItemsLoadComplete();
                                                        }
                                                    }
-                    );
+                    );*/
                 }
 
                 public void getBBbyUID(final int UserID)
                 {
-                    TitleList.clear();
+                    /*TitleList.clear();
                     BodyList.clear();
                     restService = new RestService();
                     restService.getService().getBB(new Callback<List<IdleBB>>() {
@@ -185,7 +187,22 @@ public class MainActivity extends AppCompatActivity
                                                    }
                     );
 
-                    }
+                    */}
+
+                public void GetUser(String login, String password)
+                {
+                    restService = new RestService();
+                    restService.getService().getUser(login, password, new Callback<Account>(){
+                        @Override
+                        public void success(Account account, Response response){
+                            Toast.makeText(MainActivity.this,account.name.toString(), Toast.LENGTH_LONG).show();
+                        }
+                        @Override
+                    public void failure(RetrofitError error){
+                            Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
 
 
                 @Override
