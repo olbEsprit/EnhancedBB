@@ -1,6 +1,7 @@
 package kampus.enhancedbb;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,4 +13,8 @@ public class Account {
     public List<Profile> profiles;
     public List<Subdivision> subdivisions;
     //public boolean isModerator;
+
+
+
+
 }

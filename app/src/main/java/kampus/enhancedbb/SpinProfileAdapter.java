@@ -26,6 +26,14 @@ public class SpinProfileAdapter extends ArrayAdapter<Profile> {
         this.values = values;
     }
 
+
+
+    public SpinProfileAdapter(Context context, int textViewResourceId) {
+        super(context, textViewResourceId);
+        this.context = context;
+        this.values = values;
+    }
+
     public int getCount(){
         return values.size();
     }

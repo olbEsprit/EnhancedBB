@@ -22,4 +22,6 @@ public class Profile {
     public void setId(int id) {
         this.id = id;
     }
+
+
 }

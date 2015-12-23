@@ -58,6 +58,7 @@ public class MultiSelectionSpinner extends Spinner implements
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
