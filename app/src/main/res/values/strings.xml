@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EnhancedBB</string>
+    <string name="app_name">Доска объявлений</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -20,28 +20,4 @@
         completions."
     </string>
 
-    <string-array name="spinner_data">
-        <item>Профиль 1</item>
-        <item>Профиль 2</item>
-        <item>Профиль 3</item>
-        <item>Профиль 4</item>
-        <item>Профиль 5</item>
-        <item>Профиль 6</item>
-        <item>Профиль 7</item>
-        <item>Профиль 8</item>
-        <item>Профиль 9</item>
-        <item>Профиль 10</item>
-    </string-array>
-    <string-array name="spinner_data2">
-        <item>Подразделение 1</item>
-        <item>Подразделение 2</item>
-        <item>Подразделение 3</item>
-        <item>Подразделение 4</item>
-        <item>Подразделение 5</item>
-        <item>Подразделение 6</item>
-        <item>Подразделение 7</item>
-        <item>Подразделение 8</item>
-        <item>Подразделение 9</item>
-        <item>Подразделение 10</item>
-    </string-array>
 </resources>

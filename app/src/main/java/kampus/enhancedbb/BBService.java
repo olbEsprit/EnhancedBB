@@ -4,6 +4,8 @@ package kampus.enhancedbb;
  * Created by Павел on 13.12.2015.
  */
 
+import android.telecom.Call;
+
 import java.util.List;
 
 import retrofit.Callback;
@@ -39,6 +41,16 @@ public interface BBService {
     @FormUrlEncoded
     @POST("/api/Bulletin/Subdivision")
     public void getBulletinsBySubdiv(@Field("id") long id, Callback<List<Bulletin>> callback);
+
+    @FormUrlEncoded
+    @POST("/api/Bulletin/New")
+    public void addNewBulletin(@Body NewBulletin newBulletin, Callback<String> callback);
+
+    @GET("/api/Account/Profiles")
+    public void getProfileList(Callback<List<Profile>> callback);
+
+    @GET("/api/Account/Subdivisions")
+    public void getSubdivisonList(Callback<List<Subdivision>> callback);
 
 
 

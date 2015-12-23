@@ -15,6 +15,7 @@ public class NewBulletin {
     public long[] subdivIDs;
     public long userID;
 
+
     public String getSubject() {
         return subject;
     }
