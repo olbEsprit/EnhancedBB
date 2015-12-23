@@ -12,7 +12,7 @@ public class Account {
     public String name;
     public List<Profile> profiles;
     public List<Subdivision> subdivisions;
-    //public boolean isModerator;
+    public boolean isModerator;
 
 
 

@@ -42,8 +42,7 @@ public interface BBService {
     @POST("/api/Bulletin/Subdivision")
     public void getBulletinsBySubdiv(@Field("id") long id, Callback<List<Bulletin>> callback);
 
-    @FormUrlEncoded
-    @POST("/api/Bulletin/New")
+    @POST("/api/Bulletin/Add")
     public void addNewBulletin(@Body NewBulletin newBulletin, Callback<String> callback);
 
     @GET("/api/Account/Profiles")

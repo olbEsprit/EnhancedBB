@@ -47,6 +47,8 @@ public class NewBulletinActivity extends AppCompatActivity {
     private int endYear, endMonth, endDay;
     int STARTDIALOG_DATE = 2;
     int ENDDIALOG_DATE = 1;
+    String addResponse;
+
 
 
     @Override
@@ -63,6 +65,10 @@ public class NewBulletinActivity extends AppCompatActivity {
         subDivMultiSpinner = (MultiSelectionSpinner) findViewById(R.id.subdivSpinner);
         subDivMultiSpinner.setEnabled(false);
 
+        if(!(LocalAccount.isModerator))
+        {
+            Toast.makeText(this,"Вам запрещено добавлять объявление! Пожалуйста, вернитесь назад.", Toast.LENGTH_LONG).show();
+        }
 
         final Calendar c = Calendar.getInstance();
         endYear =  c.get(Calendar.YEAR);
@@ -211,6 +217,22 @@ public class NewBulletinActivity extends AppCompatActivity {
         if(!(isError))
         {
 
+            restService = new RestService();
+            restService.getService().addNewBulletin(bb, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    Toast.makeText(NewBulletinActivity.this, s, Toast.LENGTH_LONG).show();
+                    finish();
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(NewBulletinActivity.this, error.toString() ,Toast.LENGTH_LONG);
+
+                }
+            });
+
         }
     }
 
@@ -290,7 +312,6 @@ public class NewBulletinActivity extends AppCompatActivity {
             @Override
             public void success(List<Subdivision> subdivisions, Response response) {
                 localSubdivs = subdivisions;
-                Toast.makeText(NewBulletinActivity.this, "Subdivs success", Toast.LENGTH_LONG).show();
                 subDivMultiSpinner.setItems(GetSubdivsNames(localSubdivs));
                 SubdivisionIDs = GetSubdivsIDs(localSubdivs);
                 subDivMultiSpinner.setEnabled(true);
