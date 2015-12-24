@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity
 
     final ArrayList<String> TitleList = new ArrayList<>();
     final ArrayList<String> BodyList = new ArrayList<>();
+    final ArrayList<String> AuthorList = new ArrayList<>();
+    final ArrayList<String> DateList = new ArrayList<>();
 
     int page=1;
     int UID = 1;
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerAdapter(TitleList, BodyList);
+        mAdapter = new RecyclerAdapter(TitleList, BodyList, AuthorList, DateList);
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
@@ -134,6 +136,8 @@ public class MainActivity extends AppCompatActivity
                 public void getAllBulletins(){
                     TitleList.clear();
                     BodyList.clear();
+                    AuthorList.clear();
+                    DateList.clear();
                     restService = new RestService();
                     restService.getService().getAllBulletins(nowAccount.id, new Callback<List<Bulletin>>() {
                         @Override
@@ -141,9 +145,11 @@ public class MainActivity extends AppCompatActivity
                             for (int i = 0; i < bulletins.size(); i++) {
                                 TitleList.add(bulletins.get(i).subject);
                                 BodyList.add(bulletins.get(i).text);
+                                AuthorList.add(bulletins.get(i).author);
+                                DateList.add(bulletins.get(i).dateCreate);
                             }
                             mAdapter.notifyDataSetChanged();
-                            mAdapter = new RecyclerAdapter(TitleList, BodyList);
+                            mAdapter = new RecyclerAdapter(TitleList, BodyList, AuthorList, DateList);
                             mRecyclerView.setAdapter(mAdapter);
                             onItemsLoadComplete();
                         }
@@ -159,6 +165,8 @@ public class MainActivity extends AppCompatActivity
     public void getActualBulletins(){
         TitleList.clear();
         BodyList.clear();
+        AuthorList.clear();
+        DateList.clear();
         restService = new RestService();
         restService.getService().getActualBulletins(nowAccount.id, new Callback<List<Bulletin>>() {
             @Override
@@ -166,9 +174,12 @@ public class MainActivity extends AppCompatActivity
                 for (int i = 0; i < bulletins.size(); i++) {
                     TitleList.add(bulletins.get(i).subject);
                     BodyList.add(bulletins.get(i).text);
+
+                    AuthorList.add(bulletins.get(i).author);
+                    DateList.add(bulletins.get(i).dateCreate);
                 }
                 mAdapter.notifyDataSetChanged();
-                mAdapter = new RecyclerAdapter(TitleList, BodyList);
+                mAdapter = new RecyclerAdapter(TitleList, BodyList, AuthorList, DateList);
                 mRecyclerView.setAdapter(mAdapter);
                 onItemsLoadComplete();
             }
@@ -184,6 +195,8 @@ public class MainActivity extends AppCompatActivity
     public void getBulletinsByProfile(long prof_id){
         TitleList.clear();
         BodyList.clear();
+        AuthorList.clear();
+        DateList.clear();
         restService = new RestService();
         restService.getService().getBulletinsByProfile(prof_id, new Callback<List<Bulletin>>() {
             @Override
@@ -191,9 +204,12 @@ public class MainActivity extends AppCompatActivity
                 for (int i = 0; i < bulletins.size(); i++) {
                     TitleList.add(bulletins.get(i).subject);
                     BodyList.add(bulletins.get(i).text);
+
+                    AuthorList.add(bulletins.get(i).author);
+                    DateList.add(bulletins.get(i).dateCreate);
                 }
                 mAdapter.notifyDataSetChanged();
-                mAdapter = new RecyclerAdapter(TitleList, BodyList);
+                mAdapter = new RecyclerAdapter(TitleList, BodyList,  AuthorList, DateList);
                 mRecyclerView.setAdapter(mAdapter);
                 onItemsLoadComplete();
             }
@@ -210,6 +226,8 @@ public class MainActivity extends AppCompatActivity
     public void getBulletinsBySubdiv(long sub_id){
         TitleList.clear();
         BodyList.clear();
+        AuthorList.clear();
+        DateList.clear();
         restService = new RestService();
         restService.getService().getBulletinsBySubdiv(sub_id, new Callback<List<Bulletin>>() {
             @Override
@@ -217,9 +235,13 @@ public class MainActivity extends AppCompatActivity
                 for (int i = 0; i < bulletins.size(); i++) {
                     TitleList.add(bulletins.get(i).subject);
                     BodyList.add(bulletins.get(i).text);
+
+                    AuthorList.add(bulletins.get(i).author);
+                    DateList.add(bulletins.get(i).dateCreate);
+
                 }
                 mAdapter.notifyDataSetChanged();
-                mAdapter = new RecyclerAdapter(TitleList, BodyList);
+                mAdapter = new RecyclerAdapter(TitleList, BodyList, AuthorList, DateList);
                 mRecyclerView.setAdapter(mAdapter);
                 onItemsLoadComplete();
             }
